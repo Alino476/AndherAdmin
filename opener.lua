@@ -1,9 +1,13 @@
--- Inside your GUI creation logic where you define your Admin Tab buttons:
+local decalPart = script.Parent
+local clickDetector = decalPart:FindFirstChildOfClass("ClickDetector") or Instance.new("ClickDetector", decalPart)
 
-local ImageGuiButton = AdminTab:CreateButton({
-    Name = "Spawn Admin Decal GUI",
-    Callback = function()
-        -- This executes your main image GUI script when the button is clicked
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Alino476/AndherAdmin/main/ImageGui.lua"))()
-    end,
-})
+clickDetector.MouseClick:Connect(function(player)
+    -- This runs when the admin decal is clicked, loading your opener GUI script
+    local success, err = pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Alino476/AndherAdmin/main/opener.lua"))()
+    end)
+    
+    if not success then
+        warn("Failed to load Opener Script: " .. tostring(err))
+    end
+end)
